@@ -3,18 +3,21 @@
     {
       "id": 1,
       "title": "Blog Post 1",
+      "date": "10/08/2020",
       "body": "This is some content. lorem ipsum.",
       "published": true
     },
     {
       "id": 2,
-      "title": "Dynamic Blog Post 1",
+      "title": "Blog Post 1",
+      "date": "10/05/2020",
       "body": "This is some content. lorem ipsum.",
       "published": true
     },
     {
       "id": 3,
-      "title": "Dynamic Blog Post 3",
+      "title": "Blog Post 3",
+      "date": "10/04/2020",
       "body": "This is some content. lorem ipsum.",
       "published": false
     }
