@@ -2,11 +2,8 @@ import React, { useContext } from "react";
 import styled from "@emotion/styled";
 
 import Header from "../components/Header";
-import Container from "../components/Container";
 import Sidebar from "../components/Sidebar";
 import SearchBar from "../components/SearchBar";
-
-import { Context } from "../store";
 
 const SidebarLayoutContainer = styled("div")`
   display: grid;
@@ -15,8 +12,6 @@ const SidebarLayoutContainer = styled("div")`
 `;
 
 function SidebarLayout({ children, title }) {
-  const { state, dispatch } = useContext(Context);
-
   return (
     <SidebarLayoutContainer>
       <Sidebar />

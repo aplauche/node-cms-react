@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import PostItem from "../components/PostItem";
-import Header from "../components/Header";
-import Container from "../components/Container";
-import Sidebar from "../components/Sidebar";
-import SearchBar from "../components/SearchBar";
 import SidebarLayout from "./SidebarLayout";
 
 import styled from "@emotion/styled";

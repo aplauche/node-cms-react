@@ -2,8 +2,8 @@ import React, { useState, useContext, useReducer, createContext } from "react";
 
 export const Context = createContext();
 
-function GlobalContextProvider() {
-  const initialProps = {};
+function GlobalContextProvider(props) {
+  const initialState = {};
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -12,14 +12,13 @@ function GlobalContextProvider() {
     }
   };
 
-  const [state, dispatch] = useReducer(reducer, initialProps);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const initialContext = {
-    state,
-    dispatch,
-  };
+  const initialContext = { state, dispatch };
 
-  return <Context.Provider value={initialContext} />;
+  return (
+    <Context.Provider value={initialContext}>{props.children}</Context.Provider>
+  );
 }
 
 export default GlobalContextProvider;
