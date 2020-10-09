@@ -12,6 +12,10 @@ const SidebarItemDiv = styled("a")`
     background: #555;
   }
 
+  &:hover {
+    background: #555;
+  }
+
   & img {
     width: 35px;
     height: 35px;
@@ -24,9 +28,7 @@ const SidebarItemDiv = styled("a")`
   }
 `;
 
-function SidebarItem(props) {
-  const { active, image, text } = props;
-
+function SidebarItem({ active, image, text }) {
   return (
     <SidebarItemDiv className={active ? "active" : ""}>
       <img src={image} alt={text} />

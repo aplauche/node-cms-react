@@ -21,5 +21,28 @@
       "body": "This is some content. lorem ipsum.",
       "published": false
     }
+  ],
+  "pages": [
+    {
+      "id": 1,
+      "title": "Page 1",
+      "date": "10/08/2020",
+      "body": "This is some content. lorem ipsum.",
+      "published": true
+    },
+    {
+      "id": 2,
+      "title": "Page 1",
+      "date": "10/05/2020",
+      "body": "This is some content. lorem ipsum.",
+      "published": true
+    },
+    {
+      "id": 3,
+      "title": "Page 3",
+      "date": "10/04/2020",
+      "body": "This is some content. lorem ipsum.",
+      "published": false
+    }
   ]
 }

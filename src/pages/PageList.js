@@ -8,27 +8,27 @@ import SidebarLayout from "./SidebarLayout";
 
 import styled from "@emotion/styled";
 
-function BlogList(props) {
-  const [posts, setPosts] = useState([]);
+function PageList() {
+  const [pages, setPages] = useState([]);
 
   useEffect(() => {
-    async function fetchPosts() {
+    async function fetchPages() {
       try {
-        const res = await fetch("/posts");
-        const postsData = await res.json();
+        const res = await fetch("/pages");
+        const pagesData = await res.json();
 
-        setPosts(posts.concat(postsData));
+        setPages(pages.concat(pagesData));
       } catch (err) {
         console.log(err);
       }
     }
 
-    fetchPosts();
+    fetchPages();
   }, []);
 
   return (
-    <SidebarLayout title="Blog Posts">
-      {posts.map((item) => {
+    <SidebarLayout title="Pages">
+      {pages.map((item) => {
         return (
           <PostItem
             key={item.id}
@@ -42,4 +42,4 @@ function BlogList(props) {
   );
 }
 
-export default BlogList;
+export default PageList;

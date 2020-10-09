@@ -23,11 +23,11 @@ const SiloButton = styled("a")`
   border-radius: 20px;
 `;
 
-function Header() {
+function Header({ title }) {
   return (
     <HeaderDiv>
       <div className="header-inner">
-        <h2>Blog</h2>
+        <h2>{title}</h2>
         <SiloButton>Add New</SiloButton>
       </div>
     </HeaderDiv>
