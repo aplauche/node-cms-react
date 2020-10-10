@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PostItem from "../components/PostItem";
 import SidebarLayout from "./SidebarLayout";
+import SearchBar from "../components/SearchBar";
 
 import styled from "@emotion/styled";
 
@@ -24,6 +25,7 @@ function BlogList(props) {
 
   return (
     <SidebarLayout title="Blog Posts">
+      <SearchBar />
       {posts.map((item) => {
         return (
           <PostItem

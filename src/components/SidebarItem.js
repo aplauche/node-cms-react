@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useLocation, Link } from "react-router-dom";
 
 const SidebarItemDiv = styled("a")`
   width: 100%;
@@ -28,12 +29,14 @@ const SidebarItemDiv = styled("a")`
   }
 `;
 
-function SidebarItem({ active, image, text }) {
+function SidebarItem({ active, image, text, target }) {
   return (
-    <SidebarItemDiv className={active ? "active" : ""}>
-      <img src={image} alt={text} />
-      <p>{text}</p>
-    </SidebarItemDiv>
+    <Link to={target} style={{ textDecoration: "none" }}>
+      <SidebarItemDiv className={active ? "active" : ""}>
+        <img src={image} alt={text} />
+        <p>{text}</p>
+      </SidebarItemDiv>
+    </Link>
   );
 }
 

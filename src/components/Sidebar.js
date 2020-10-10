@@ -23,16 +23,19 @@ function Sidebar() {
         text="Posts"
         image="/images/blog-icon.svg"
         active={location.pathname == "/manage/posts" && true}
+        target={"/manage/posts"}
       />
       <SidebarItem
         text="Pages"
         image="/images/pages-icon.svg"
         active={location.pathname == "/manage/pages" && true}
+        target={"/manage/pages"}
       />
       <SidebarItem
-        text="Users"
+        text="Profile"
         image="/images/users-icon.svg"
-        active={location.pathname == "/manage/users" && true}
+        active={location.pathname == "/manage/profile" && true}
+        target={"/manage/profile"}
       />
     </SidebarDiv>
   );

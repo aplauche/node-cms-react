@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "@emotion/styled";
+import { Context } from "../store";
+import Button from "./Button";
 
 const HeaderDiv = styled("div")`
   width: 100%;
@@ -16,19 +18,22 @@ const HeaderDiv = styled("div")`
     color: white;
   }
 `;
-const SiloButton = styled("a")`
-  color: white;
-  background: linear-gradient(45deg, #a6c0fe, #f68084);
-  padding: 10px 24px;
-  border-radius: 20px;
-`;
 
 function Header({ title }) {
+  const { state, dispatch } = useContext(Context);
+
+  function handleLogout() {
+    dispatch({ type: "logout" });
+  }
+
   return (
     <HeaderDiv>
       <div className="header-inner">
         <h2>{title}</h2>
-        <SiloButton>Add New</SiloButton>
+        <div>
+          <Button>Add New</Button>
+          <Button onClick={handleLogout}>Logout</Button>
+        </div>
       </div>
     </HeaderDiv>
   );

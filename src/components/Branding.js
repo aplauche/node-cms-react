@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
 const BrandingDiv = styled("div")`
   width: 100%;
@@ -24,10 +25,12 @@ const BrandingDiv = styled("div")`
 `;
 function Branding() {
   return (
-    <BrandingDiv>
-      <img src="/images/silo-logo.svg" alt="silo logo" />
-      <h1>SILO</h1>
-    </BrandingDiv>
+    <Link to="/">
+      <BrandingDiv>
+        <img src="/images/silo-logo.svg" alt="silo logo" />
+        <h1>SILO</h1>
+      </BrandingDiv>
+    </Link>
   );
 }
 
