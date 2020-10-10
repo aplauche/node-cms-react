@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useLocation, Link } from "react-router-dom";
 
-const SidebarItemDiv = styled("a")`
+const SidebarItemDiv = styled("div")`
   width: 100%;
   padding: 10px 20px;
   display: flex;
@@ -31,7 +31,7 @@ const SidebarItemDiv = styled("a")`
 
 function SidebarItem({ active, image, text, target }) {
   return (
-    <Link to={target} style={{ textDecoration: "none" }}>
+    <Link to={target}>
       <SidebarItemDiv className={active ? "active" : ""}>
         <img src={image} alt={text} />
         <p>{text}</p>

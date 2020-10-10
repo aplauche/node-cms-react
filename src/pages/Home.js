@@ -8,7 +8,7 @@ const DashboardDiv = styled("div")`
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100%;
-  gap: 30px;
+  gap: 40px;
 `;
 
 const DashboardItemDiv = styled("div")`
