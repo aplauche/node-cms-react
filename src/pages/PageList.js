@@ -30,6 +30,8 @@ function PageList() {
         return (
           <PostItem
             key={item.id}
+            contentType="pages"
+            id={item.id}
             title={item.title}
             date={item.date}
             published={item.published}

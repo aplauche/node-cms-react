@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
 const PostItemDiv = styled("div")`
   color: gray;
@@ -31,7 +32,7 @@ const PostItemDiv = styled("div")`
 `;
 
 function PostItem(props) {
-  const { title, date, published } = props;
+  const { id, contentType, title, date, published } = props;
 
   return (
     <PostItemDiv published={published}>
@@ -42,7 +43,9 @@ function PostItem(props) {
         {published ? "live" : "draft"}
       </span>
       <div>
-        <button>Edit</button>
+        <Link to={`${contentType}/edit/${id}`}>
+          <button>Edit</button>
+        </Link>
         <button>Delete</button>
       </div>
     </PostItemDiv>

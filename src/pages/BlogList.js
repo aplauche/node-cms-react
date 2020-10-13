@@ -30,6 +30,8 @@ function BlogList(props) {
         return (
           <PostItem
             key={item.id}
+            id={item.id}
+            contentType="posts"
             title={item.title}
             date={item.date}
             published={item.published}

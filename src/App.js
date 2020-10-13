@@ -14,13 +14,13 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/manage/posts">
+          <Route exact path="/posts">
             <BlogList />
           </Route>
-          <Route path="/manage/pages">
+          <Route exact path="/pages">
             <PageList />
           </Route>
-          <Route path="/edit/post/:id">
+          <Route path="/posts/edit/:id">
             <EditPost />
           </Route>
         </Switch>
