@@ -2,10 +2,10 @@
   "posts": [
     {
       "id": 1,
-      "title": "Blog Post 1",
-      "date": "10/08/2020",
-      "body": "This is some content. lorem ipsum.",
-      "published": true
+      "body": "test of editing blog through the interface",
+      "title": "Blog Post Edited",
+      "seoTitle": "this is the blog meta title",
+      "seoDesc": "this is the blog meta desc kjskldfj\n\n\n"
     },
     {
       "id": 2,

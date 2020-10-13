@@ -15,6 +15,7 @@ function SidebarLayout({ children, title }) {
   return (
     <SidebarLayoutContainer>
       <Sidebar />
+      <div></div>
       <div className="main">
         <Header title={title} />
         <div
