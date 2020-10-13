@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, withRouter } from "react-router-dom";
-import PostItem from "../components/PostItem";
+
 import SidebarLayout from "./SidebarLayout";
-import SearchBar from "../components/SearchBar";
+
 import Button from "../components/Button";
 import { useImmer } from "use-immer";
 
@@ -44,10 +44,10 @@ const SiloFileUploadLabel = styled("label")`
   cursor: pointer;
 `;
 
-function EditPost(props) {
+function EditPage(props) {
   const [state, setState] = useImmer({
     urlId: useParams().id,
-    post: {
+    page: {
       id: "",
       title: "",
       body: "",
@@ -58,61 +58,61 @@ function EditPost(props) {
   });
 
   useEffect(() => {
-    async function fetchPost() {
+    async function fetchpage() {
       try {
-        const res = await fetch(`/posts/${state.urlId}`);
-        const postData = await res.json();
+        const res = await fetch(`/pages/${state.urlId}`);
+        const pageData = await res.json();
 
-        console.log(postData);
+        console.log(pageData);
 
         setState((draft) => {
-          draft.post = postData;
+          draft.page = pageData;
         });
       } catch (err) {
         console.log(err);
       }
     }
 
-    fetchPost();
+    fetchpage();
   }, []);
 
   function handleTitleChange(e) {
     const val = e.target.value;
     setState((draft) => {
-      draft.post.title = val;
+      draft.page.title = val;
     });
   }
 
   function handleSEOTitleChange(e) {
     const val = e.target.value;
     setState((draft) => {
-      draft.post.seoTitle = val;
+      draft.page.seoTitle = val;
     });
   }
 
   function handleSEODescChange(e) {
     const val = e.target.value;
     setState((draft) => {
-      draft.post.seoDesc = val;
+      draft.page.seoDesc = val;
     });
   }
 
   function handleBodyChange(e) {
     const val = e.target.value;
     setState((draft) => {
-      draft.post.body = val;
+      draft.page.body = val;
     });
   }
 
   function handleSubmit() {
     async function saveEdits() {
       try {
-        const res = await fetch(`/posts/${state.urlId}`, {
+        const res = await fetch(`/pages/${state.urlId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(state.post),
+          body: JSON.stringify(state.page),
         });
       } catch (err) {
         console.log(err);
@@ -123,22 +123,22 @@ function EditPost(props) {
   }
 
   return (
-    <SidebarLayout title={state.post.title}>
-      <form action="/posts" method="POST">
+    <SidebarLayout title={state.page.title}>
+      <form action="/pages" method="POST">
         <FormGroup>
-          <SiloLabel htmlFor="title">Post Title</SiloLabel>
+          <SiloLabel htmlFor="title">Page Title</SiloLabel>
           <SiloInput
             id="title"
             type="text"
-            value={state.post.title}
+            value={state.page.title}
             onChange={handleTitleChange}
           ></SiloInput>
         </FormGroup>
         <FormGroup>
-          <SiloLabel htmlFor="body">Post Content</SiloLabel>
+          <SiloLabel htmlFor="body">Page Content</SiloLabel>
           <SiloTextArea
             id="body"
-            value={state.post.body}
+            value={state.page.body}
             rows="15"
             onChange={handleBodyChange}
           ></SiloTextArea>
@@ -154,7 +154,7 @@ function EditPost(props) {
           <SiloInput
             id="seotitle"
             type="text"
-            value={state.post.seoTitle}
+            value={state.page.seoTitle}
             onChange={handleSEOTitleChange}
           ></SiloInput>
         </FormGroup>
@@ -162,15 +162,15 @@ function EditPost(props) {
           <SiloLabel htmlFor="body">SEO Meta Description</SiloLabel>
           <SiloTextArea
             id="seobody"
-            value={state.post.seoDesc}
+            value={state.page.seoDesc}
             rows="6"
             onChange={handleSEODescChange}
           ></SiloTextArea>
         </FormGroup>
       </form>
-      <Button onClick={handleSubmit}>Save Post</Button>
+      <Button onClick={handleSubmit}>Save Page</Button>
     </SidebarLayout>
   );
 }
 
-export default EditPost;
+export default EditPage;

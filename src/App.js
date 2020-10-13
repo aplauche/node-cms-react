@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import BlogList from "./pages/BlogList";
 import PageList from "./pages/PageList";
 import EditPost from "./pages/EditPost";
+import EditPage from "./pages/EditPage";
 import Home from "./pages/Home";
 import GlobalContextProvider from "./store";
 
@@ -22,6 +23,9 @@ function App() {
           </Route>
           <Route path="/posts/edit/:id">
             <EditPost />
+          </Route>
+          <Route path="/pages/edit/:id">
+            <EditPage />
           </Route>
         </Switch>
       </BrowserRouter>

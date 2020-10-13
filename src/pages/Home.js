@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Context } from "../store";
 import SidebarLayout from "./SidebarLayout";
@@ -63,8 +64,12 @@ function Home() {
         <div>
           <h1>Manage</h1>
           <hr />
-          <DashboardItemDiv>Manage Posts</DashboardItemDiv>
-          <DashboardItemDiv>Manage Pages</DashboardItemDiv>
+          <Link to={"/posts"}>
+            <DashboardItemDiv>Manage Posts</DashboardItemDiv>
+          </Link>
+          <Link to={"/pages"}>
+            <DashboardItemDiv>Manage Pages</DashboardItemDiv>
+          </Link>
         </div>
       </DashboardDiv>
     </SidebarLayout>
