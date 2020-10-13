@@ -4,9 +4,12 @@ import { Context } from "../store";
 import Button from "./Button";
 
 const HeaderDiv = styled("div")`
-  width: 100%;
   height: 70px;
   background: #292929;
+  position: fixed;
+  top: 0;
+  left: 250px;
+  right: 0;
 
   & .header-inner {
     max-width: 800px;

@@ -9,7 +9,6 @@ const SidebarDiv = styled("aside")`
   width: 250px;
   min-height: 100vh;
   background: #292929;
-  position: fixed;
 `;
 
 function Sidebar() {

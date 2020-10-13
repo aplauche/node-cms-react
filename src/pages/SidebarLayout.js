@@ -15,8 +15,10 @@ function SidebarLayout({ children, title }) {
   return (
     <SidebarLayoutContainer>
       <Sidebar />
-      <div></div>
-      <div className="main">
+      <div
+        className="main"
+        style={{ height: "100vh", overflow: "scroll", paddingTop: "70px" }}
+      >
         <Header title={title} />
         <div
           style={{
