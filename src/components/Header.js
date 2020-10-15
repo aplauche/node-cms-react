@@ -23,10 +23,10 @@ const HeaderDiv = styled("div")`
 `;
 
 function Header({ title }) {
-  const { state, dispatch } = useContext(Context);
+  const { appState, appDispatch } = useContext(Context);
 
   function handleLogout() {
-    dispatch({ type: "logout" });
+    appDispatch({ type: "logout" });
   }
 
   return (
@@ -34,7 +34,7 @@ function Header({ title }) {
       <div className="header-inner">
         <h2>{title}</h2>
         <div>
-          <Button>Add New</Button>
+          {/* <Button>Add New</Button> */}
           <Button onClick={handleLogout}>Logout</Button>
         </div>
       </div>

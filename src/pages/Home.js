@@ -30,13 +30,13 @@ const DashboardItemDiv = styled("div")`
 `;
 
 function Home() {
-  const { state, dispatch } = useContext(Context);
+  const { appState, appDispatch } = useContext(Context);
 
   function handleLogin() {
-    dispatch({ type: "login" });
+    appDispatch({ type: "login" });
   }
 
-  if (!state.loggedIn) {
+  if (!appState.loggedIn) {
     return (
       <div
         style={{

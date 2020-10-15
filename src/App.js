@@ -4,9 +4,11 @@ import BlogList from "./pages/BlogList";
 import PageList from "./pages/PageList";
 import EditPost from "./pages/EditPost";
 import EditPage from "./pages/EditPage";
+import FlashMessages from "./components/FlashMessages";
 import Home from "./pages/Home";
 import GlobalContextProvider from "./store";
 import EditUser from "./pages/EditUser";
+import { Context } from "./store";
 
 function App() {
   return (

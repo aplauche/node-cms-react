@@ -6,6 +6,7 @@ export const Context = createContext();
 function GlobalContextProvider(props) {
   const initialState = {
     loggedIn: false,
+    flash: [],
   };
 
   const reducer = (draft, action) => {
@@ -16,12 +17,15 @@ function GlobalContextProvider(props) {
       case "logout":
         draft.loggedIn = false;
         break;
+      case "flash":
+        draft.flash.push(action.value);
+        break;
     }
   };
 
   const [state, dispatch] = useImmerReducer(reducer, initialState);
 
-  const initialContext = { state, dispatch };
+  const initialContext = { appState: state, appDispatch: dispatch };
 
   return (
     <Context.Provider value={initialContext}>{props.children}</Context.Provider>
