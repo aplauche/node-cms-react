@@ -46,10 +46,12 @@
     }
   ],
   "user": {
+    "id": 1,
     "username": "anton",
+    "firstName": "Anton",
+    "lastName": "Plauche-capers",
     "email": "anton@anton.com",
     "password": "password",
-    "avatar": "",
     "bio": "Anton is a writer based in central illinois."
   }
 }

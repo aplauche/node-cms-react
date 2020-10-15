@@ -6,6 +6,7 @@ import EditPost from "./pages/EditPost";
 import EditPage from "./pages/EditPage";
 import Home from "./pages/Home";
 import GlobalContextProvider from "./store";
+import EditUser from "./pages/EditUser";
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
           </Route>
           <Route exact path="/pages">
             <PageList />
+          </Route>
+          <Route exact path="/profile">
+            <EditUser />
           </Route>
           <Route path="/posts/edit/:id">
             <EditPost />
