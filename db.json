@@ -28,7 +28,25 @@
       "title": "Page 1",
       "date": "10/08/2020",
       "body": "This is some content. lorem ipsum.",
-      "published": true
+      "published": true,
+      "content": {
+        "time": 1602819132339,
+        "blocks": [
+          {
+            "type": "paragraph",
+            "data": {
+              "text": "another test boom"
+            }
+          },
+          {
+            "type": "paragraph",
+            "data": {
+              "text": "lets see if <b>this re</b>ally works"
+            }
+          }
+        ],
+        "version": "2.19.0"
+      }
     },
     {
       "id": 2,

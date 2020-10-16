@@ -1102,6 +1102,29 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
+"@editorjs/editorjs@^2.19.0":
+  version "2.19.0"
+  resolved "https://registry.yarnpkg.com/@editorjs/editorjs/-/editorjs-2.19.0.tgz#ac98f7b1e627c89b51c4430f6aa325e873ade7fc"
+  integrity sha512-8PUVaBZx69IrG8dNrE+FZbHSiRTR8ql8L/cmEi1mOdEdTqnOLq5Wv9dgemK00mBWEgNoavMAjtGQpItGknAa8A==
+  dependencies:
+    codex-notifier "^1.1.2"
+    codex-tooltip "^1.0.1"
+
+"@editorjs/header@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@editorjs/header/-/header-2.6.0.tgz#64d1c6af7eefd7ad272d12dbf7ccef8b56771240"
+  integrity sha512-1psNX/irDjJ8Bp1l7DjkYWz7IBtjVIRANk7kPkNoY2CfAeeCFYbJmMlXdqTF2WeAjYv2WMy5ey/aR5fTccgFaw==
+
+"@editorjs/image@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@editorjs/image/-/image-2.6.0.tgz#269d8dceebbb5fe667f9152188c425ba8b1c300f"
+  integrity sha512-lX4Pz9cW3gGFzlmYLRAsBXTiqUG/MRG7NK4QVU+n/VnUWPU1e791eiIpgRLHfpPj6Maaw5a+GRut90D5EdXtqg==
+
+"@editorjs/paragraph@^2.8.0":
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/@editorjs/paragraph/-/paragraph-2.8.0.tgz#11cc381fcafaf8b9160517ce65d59eee93fc4af9"
+  integrity sha512-z6w5ZR0ru3p/IjxJW/tb7OcSnVttkZukQMIsnBMX1FIKc1BNdr7NwM1YoCyTl4OnC90YfL0xgES6/20/W267pw==
+
 "@emotion/cache@^10.0.27":
   version "10.0.29"
   resolved "https://registry.yarnpkg.com/@emotion/cache/-/cache-10.0.29.tgz#87e7e64f412c060102d589fe7c6dc042e6f9d1e0"
@@ -3190,6 +3213,16 @@ coa@^2.0.2:
     "@types/q" "^1.5.1"
     chalk "^2.4.1"
     q "^1.1.2"
+
+codex-notifier@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/codex-notifier/-/codex-notifier-1.1.2.tgz#a733079185f4c927fa296f1d71eb8753fe080895"
+  integrity sha512-DCp6xe/LGueJ1N5sXEwcBc3r3PyVkEEDNWCVigfvywAkeXcZMk9K41a31tkEFBW0Ptlwji6/JlAb49E3Yrxbtg==
+
+codex-tooltip@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/codex-tooltip/-/codex-tooltip-1.0.1.tgz#f6e4f39d81507f9c455b667f1287746d14ee8056"
+  integrity sha512-1xLb1NZbxguNtf02xBRhDphq/EXvMMeEbY0ievjQTHqf8UjXsD41evGk9rqcbjpl+JOjNgtwnp1OaU/X/h6fhQ==
 
 collection-visit@^1.0.0:
   version "1.0.0"
@@ -9216,6 +9249,11 @@ react-dom@^16.13.1:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.19.1"
+
+react-editor-js@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/react-editor-js/-/react-editor-js-1.6.2.tgz#25fb4a3451d314c510a6c26b2b95af27a4affbb7"
+  integrity sha512-bwPJiR0D9LuCpEQZUHNIp0hLmy+l+GSH4XUPcFtMr/PpTPoUhwinMvpAytqLIchXgSIwTu3TGPgv/BlpsVstbQ==
 
 react-error-overlay@^6.0.7:
   version "6.0.7"

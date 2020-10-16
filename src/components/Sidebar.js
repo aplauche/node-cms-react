@@ -14,8 +14,6 @@ const SidebarDiv = styled("aside")`
 function Sidebar() {
   const location = useLocation();
 
-  console.log(location);
-
   return (
     <SidebarDiv>
       <Branding />
