@@ -30,7 +30,7 @@
       "body": "This is some content. lorem ipsum.",
       "published": true,
       "content": {
-        "time": 1602819132339,
+        "time": 1603152965408,
         "blocks": [
           {
             "type": "paragraph",
@@ -41,12 +41,13 @@
           {
             "type": "paragraph",
             "data": {
-              "text": "lets see if <b>this re</b>ally works"
+              "text": "lets see if <b>this re</b>ally works... still working"
             }
           }
         ],
         "version": "2.19.0"
-      }
+      },
+      "seoTitle": "seo title"
     },
     {
       "id": 2,

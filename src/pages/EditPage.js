@@ -8,7 +8,8 @@ import Header from "@editorjs/header";
 import SidebarLayout from "./SidebarLayout";
 
 import Button from "../components/Button";
-import { useImmer } from "use-immer";
+
+import { useImmerReducer } from "use-immer";
 
 import styled from "@emotion/styled";
 
@@ -38,6 +39,19 @@ const SiloTextArea = styled("textarea")`
   border-radius: 5px;
 `;
 
+const SiloEditor = styled("div")`
+  width: 100%;
+
+  & #editor-js {
+    border: 1px solid #a6c0fe;
+    border-radius: 5px;
+    background-color: white;
+  }
+  & .codex-editor__redactor {
+    padding-bottom: 100px !important;
+  }
+`;
+
 const SiloFileUploadLabel = styled("label")`
   width: 100%;
   border: 1px dashed #f68084;
@@ -49,7 +63,7 @@ const SiloFileUploadLabel = styled("label")`
 `;
 
 function EditPage(props) {
-  const [state, setState] = useImmer({
+  const initialState = {
     urlId: useParams().id,
     page: {
       id: "",
@@ -60,7 +74,30 @@ function EditPage(props) {
       seoDesc: "",
     },
     isLoaded: false,
-  });
+  };
+
+  const reducer = (draft, action) => {
+    switch (action.type) {
+      case "pageLoaded":
+        draft.page = action.pageData;
+        draft.isLoaded = true;
+        break;
+      case "titleChange":
+        draft.page.title = action.data;
+        break;
+      case "contentChange":
+        draft.page.content = action.data;
+        break;
+      case "seoTitleChange":
+        draft.page.seoTitle = action.data;
+        break;
+      case "seoDescChange":
+        draft.page.seoDesc = action.data;
+        break;
+    }
+  };
+
+  const [state, dispatch] = useImmerReducer(reducer, initialState);
 
   useEffect(() => {
     console.log(state);
@@ -69,10 +106,7 @@ function EditPage(props) {
         const res = await fetch(`/pages/${state.urlId}`);
         const pageData = await res.json();
 
-        setState((draft) => {
-          draft.page = pageData;
-          draft.isLoaded = true;
-        });
+        dispatch({ type: "pageLoaded", pageData: pageData });
       } catch (err) {
         console.log(err);
       }
@@ -80,34 +114,6 @@ function EditPage(props) {
 
     fetchpage();
   }, []);
-
-  function handleTitleChange(e) {
-    const val = e.target.value;
-    setState((draft) => {
-      draft.page.title = val;
-    });
-  }
-
-  function handleSEOTitleChange(e) {
-    const val = e.target.value;
-    setState((draft) => {
-      draft.page.seoTitle = val;
-    });
-  }
-
-  function handleSEODescChange(e) {
-    const val = e.target.value;
-    setState((draft) => {
-      draft.page.seoDesc = val;
-    });
-  }
-
-  // function handleBodyChange(e) {
-  //   const val = e.target.value;
-  //   setState((draft) => {
-  //     draft.page.body = val;
-  //   });
-  // }
 
   function handleSubmit() {
     async function saveEdits() {
@@ -132,9 +138,7 @@ function EditPage(props) {
 
   async function handleEditorJSSave() {
     const savedData = await instanceRef.current.save();
-    setState((draft) => {
-      draft.page.content = savedData;
-    });
+    dispatch({ type: "contentChange", data: savedData });
   }
 
   return (
@@ -146,29 +150,34 @@ function EditPage(props) {
             id="title"
             type="text"
             value={state.page.title || ""}
-            onChange={handleTitleChange}
+            onChange={(e) =>
+              dispatch({ type: "titleChange", data: e.target.value })
+            }
           ></SiloInput>
         </FormGroup>
         <FormGroup>
-          {state.isLoaded && (
-            <EditorJs
-              instanceRef={(instance) => (instanceRef.current = instance)}
-              tools={{
-                image: Image,
-                paragraph: {
-                  class: Paragraph,
-                  inlineToolbar: true,
-                },
-                header: {
-                  class: Header,
-                  inlineToolbar: true,
-                },
-              }}
-              data={state.page.content}
-              onChange={handleEditorJSSave}
-              placeholder="Start creating your content..."
-            />
-          )}
+          <SiloLabel>Main Content</SiloLabel>
+          <SiloEditor>
+            {state.isLoaded && (
+              <EditorJs
+                instanceRef={(instance) => (instanceRef.current = instance)}
+                tools={{
+                  image: Image,
+                  paragraph: {
+                    class: Paragraph,
+                    inlineToolbar: true,
+                  },
+                  header: {
+                    class: Header,
+                    inlineToolbar: true,
+                  },
+                }}
+                data={state.page.content}
+                onChange={handleEditorJSSave}
+                placeholder="Start creating your content..."
+              />
+            )}
+          </SiloEditor>
         </FormGroup>
         <FormGroup>
           <SiloFileUploadLabel htmlFor="file-upload">
@@ -182,7 +191,9 @@ function EditPage(props) {
             id="seotitle"
             type="text"
             value={state.page.seoTitle || ""}
-            onChange={handleSEOTitleChange}
+            onChange={(e) =>
+              dispatch({ type: "seoTitleChange", data: e.target.value })
+            }
           ></SiloInput>
         </FormGroup>
         <FormGroup>
@@ -191,7 +202,9 @@ function EditPage(props) {
             id="seobody"
             value={state.page.seoDesc || ""}
             rows="6"
-            onChange={handleSEODescChange}
+            onChange={(e) =>
+              dispatch({ type: "seoDescChange", data: e.target.value })
+            }
           ></SiloTextArea>
         </FormGroup>
       </form>
