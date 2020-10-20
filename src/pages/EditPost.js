@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link, withRouter } from "react-router-dom";
 import PostItem from "../components/PostItem";
 import SidebarLayout from "./SidebarLayout";
 import SearchBar from "../components/SearchBar";
 import Button from "../components/Button";
-import { useImmer } from "use-immer";
+import { useImmerReducer } from "use-immer";
+
+import EditorJs from "react-editor-js";
+import Image from "@editorjs/image";
+import Paragraph from "@editorjs/paragraph";
+import Header from "@editorjs/header";
 
 import styled from "@emotion/styled";
 
@@ -34,6 +39,19 @@ const SiloTextArea = styled("textarea")`
   border-radius: 5px;
 `;
 
+const SiloEditor = styled("div")`
+  width: 100%;
+
+  & #editor-js {
+    border: 1px solid #a6c0fe;
+    border-radius: 5px;
+    background-color: white;
+  }
+  & .codex-editor__redactor {
+    padding-bottom: 100px !important;
+  }
+`;
+
 const SiloFileUploadLabel = styled("label")`
   width: 100%;
   border: 1px dashed #f68084;
@@ -45,64 +63,57 @@ const SiloFileUploadLabel = styled("label")`
 `;
 
 function EditPost(props) {
-  const [state, setState] = useImmer({
+  const initialState = {
     urlId: useParams().id,
     post: {
       id: "",
       title: "",
-      body: "",
+      content: {},
       date: "",
       seoTitle: "",
       seoDesc: "",
     },
-  });
+    isLoaded: false,
+  };
+
+  const reducer = (draft, action) => {
+    switch (action.type) {
+      case "postLoaded":
+        draft.post = action.postData;
+        draft.isLoaded = true;
+        break;
+      case "titleChange":
+        draft.post.title = action.data;
+        break;
+      case "contentChange":
+        draft.post.content = action.data;
+        break;
+      case "seoTitleChange":
+        draft.post.seoTitle = action.data;
+        break;
+      case "seoDescChange":
+        draft.post.seoDesc = action.data;
+        break;
+    }
+  };
+
+  const [state, dispatch] = useImmerReducer(reducer, initialState);
 
   useEffect(() => {
-    async function fetchPost() {
+    console.log(state);
+    async function fetchpost() {
       try {
         const res = await fetch(`/posts/${state.urlId}`);
         const postData = await res.json();
 
-        console.log(postData);
-
-        setState((draft) => {
-          draft.post = postData;
-        });
+        dispatch({ type: "postLoaded", postData: postData });
       } catch (err) {
         console.log(err);
       }
     }
 
-    fetchPost();
+    fetchpost();
   }, []);
-
-  function handleTitleChange(e) {
-    const val = e.target.value;
-    setState((draft) => {
-      draft.post.title = val;
-    });
-  }
-
-  function handleSEOTitleChange(e) {
-    const val = e.target.value;
-    setState((draft) => {
-      draft.post.seoTitle = val;
-    });
-  }
-
-  function handleSEODescChange(e) {
-    const val = e.target.value;
-    setState((draft) => {
-      draft.post.seoDesc = val;
-    });
-  }
-
-  function handleBodyChange(e) {
-    const val = e.target.value;
-    setState((draft) => {
-      draft.post.body = val;
-    });
-  }
 
   function handleSubmit() {
     async function saveEdits() {
@@ -122,6 +133,14 @@ function EditPost(props) {
     saveEdits();
   }
 
+  // Editor JS functions
+  const instanceRef = useRef(null);
+
+  async function handleEditorJSSave() {
+    const savedData = await instanceRef.current.save();
+    dispatch({ type: "contentChange", data: savedData });
+  }
+
   return (
     <SidebarLayout title={state.post.title}>
       <form action="/posts" method="POST">
@@ -130,18 +149,35 @@ function EditPost(props) {
           <SiloInput
             id="title"
             type="text"
-            value={state.post.title}
-            onChange={handleTitleChange}
+            value={state.post.title || ""}
+            onChange={(e) =>
+              dispatch({ type: "titleChange", data: e.target.value })
+            }
           ></SiloInput>
         </FormGroup>
         <FormGroup>
-          <SiloLabel htmlFor="body">Post Content</SiloLabel>
-          <SiloTextArea
-            id="body"
-            value={state.post.body}
-            rows="15"
-            onChange={handleBodyChange}
-          ></SiloTextArea>
+          <SiloLabel>Main Content</SiloLabel>
+          <SiloEditor>
+            {state.isLoaded && (
+              <EditorJs
+                instanceRef={(instance) => (instanceRef.current = instance)}
+                tools={{
+                  image: Image,
+                  paragraph: {
+                    class: Paragraph,
+                    inlineToolbar: true,
+                  },
+                  header: {
+                    class: Header,
+                    inlineToolbar: true,
+                  },
+                }}
+                data={state.post.content}
+                onChange={handleEditorJSSave}
+                placeholder="Start creating your content..."
+              />
+            )}
+          </SiloEditor>
         </FormGroup>
         <FormGroup>
           <SiloFileUploadLabel htmlFor="file-upload">
@@ -154,17 +190,21 @@ function EditPost(props) {
           <SiloInput
             id="seotitle"
             type="text"
-            value={state.post.seoTitle}
-            onChange={handleSEOTitleChange}
+            value={state.post.seoTitle || ""}
+            onChange={(e) =>
+              dispatch({ type: "seoTitleChange", data: e.target.value })
+            }
           ></SiloInput>
         </FormGroup>
         <FormGroup>
           <SiloLabel htmlFor="body">SEO Meta Description</SiloLabel>
           <SiloTextArea
             id="seobody"
-            value={state.post.seoDesc}
+            value={state.post.seoDesc || ""}
             rows="6"
-            onChange={handleSEODescChange}
+            onChange={(e) =>
+              dispatch({ type: "seoDescChange", data: e.target.value })
+            }
           ></SiloTextArea>
         </FormGroup>
       </form>

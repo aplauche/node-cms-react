@@ -3,7 +3,7 @@ import { useParams, Link, withRouter } from "react-router-dom";
 import SidebarLayout from "./SidebarLayout";
 
 import Button from "../components/Button";
-import { useImmer } from "use-immer";
+import { useImmerReducer } from "use-immer";
 
 import styled from "@emotion/styled";
 
@@ -44,7 +44,7 @@ const SiloFileUploadLabel = styled("label")`
 `;
 
 function EditUser(props) {
-  const [state, setState] = useImmer({
+  const initialState = {
     urlId: useParams().id,
     user: {
       id: "",
@@ -55,7 +55,29 @@ function EditUser(props) {
       password: "",
       bio: "",
     },
-  });
+  };
+
+  const reducer = (draft, action) => {
+    switch (action.type) {
+      case "userLoaded":
+        draft.user = action.userData;
+        break;
+      case "firstNameChange":
+        draft.user.firstName = action.data;
+        break;
+      case "lastNameChange":
+        draft.user.lastName = action.data;
+        break;
+      case "usernameChange":
+        draft.user.username = action.data;
+        break;
+      case "bioChange":
+        draft.user.bio = action.data;
+        break;
+    }
+  };
+
+  const [state, dispatch] = useImmerReducer(reducer, initialState);
 
   useEffect(() => {
     async function fetchUser() {
@@ -65,9 +87,7 @@ function EditUser(props) {
 
         console.log(userData);
 
-        setState((draft) => {
-          draft.user = userData;
-        });
+        dispatch({ type: "userLoaded", userData: userData });
       } catch (err) {
         console.log(err);
       }
@@ -75,34 +95,6 @@ function EditUser(props) {
 
     fetchUser();
   }, []);
-
-  function handleUsernameChange(e) {
-    const val = e.target.value;
-    setState((draft) => {
-      draft.user.username = val;
-    });
-  }
-
-  function handleFirstNameChange(e) {
-    const val = e.target.value;
-    setState((draft) => {
-      draft.user.firstName = val;
-    });
-  }
-
-  function handleLastNameChange(e) {
-    const val = e.target.value;
-    setState((draft) => {
-      draft.user.lastName = val;
-    });
-  }
-
-  function handleBioChange(e) {
-    const val = e.target.value;
-    setState((draft) => {
-      draft.user.bio = val;
-    });
-  }
 
   function handleSubmit() {
     async function saveEdits() {
@@ -131,7 +123,9 @@ function EditUser(props) {
             id="title"
             type="text"
             value={state.user.username}
-            onChange={handleUsernameChange}
+            onChange={(e) =>
+              dispatch({ type: "usernameChange", data: e.target.value })
+            }
           ></SiloInput>
         </FormGroup>
 
@@ -141,7 +135,9 @@ function EditUser(props) {
             id="firstname"
             type="text"
             value={state.user.firstName}
-            onChange={handleFirstNameChange}
+            onChange={(e) =>
+              dispatch({ type: "firstNameChange", data: e.target.value })
+            }
           ></SiloInput>
         </FormGroup>
         <FormGroup>
@@ -150,7 +146,9 @@ function EditUser(props) {
             id="lastname"
             type="text"
             value={state.user.lastName}
-            onChange={handleLastNameChange}
+            onChange={(e) =>
+              dispatch({ type: "lastNameChange", data: e.target.value })
+            }
           ></SiloInput>
         </FormGroup>
         <FormGroup>
@@ -159,7 +157,9 @@ function EditUser(props) {
             id="bio"
             value={state.user.bio}
             rows="6"
-            onChange={handleBioChange}
+            onChange={(e) =>
+              dispatch({ type: "bioChange", data: e.target.value })
+            }
           ></SiloTextArea>
         </FormGroup>
       </form>

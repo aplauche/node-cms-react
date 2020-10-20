@@ -3,9 +3,21 @@
     {
       "id": 1,
       "body": "test of editing blog through the interface",
-      "title": "Blog Post Edited!!",
+      "title": "Blog Post Edited",
       "seoTitle": "this is the blog meta title",
-      "seoDesc": "this is the blog meta desc kjskldfj\n\n\n"
+      "seoDesc": "this is the blog meta desc kjskldfj\n\n\n",
+      "content": {
+        "time": 1603153272557,
+        "blocks": [
+          {
+            "type": "paragraph",
+            "data": {
+              "text": "editing a blog post"
+            }
+          }
+        ],
+        "version": "2.19.0"
+      }
     },
     {
       "id": 2,
@@ -68,7 +80,7 @@
     "id": 1,
     "username": "anton",
     "firstName": "Anton",
-    "lastName": "Plauche-capers",
+    "lastName": "Plauche",
     "email": "anton@anton.com",
     "password": "password",
     "bio": "Anton is a writer based in central illinois."
