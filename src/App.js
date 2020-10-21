@@ -13,6 +13,7 @@ import { Context } from "./store";
 function App() {
   return (
     <GlobalContextProvider>
+      <FlashMessages />
       <BrowserRouter>
         <Switch>
           <Route exact path="/">

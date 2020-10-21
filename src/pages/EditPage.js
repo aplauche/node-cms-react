@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useParams, Link, withRouter } from "react-router-dom";
+import React, { useEffect, useContext, useRef } from "react";
+import { useParams, Link, withRouter, useHistory } from "react-router-dom";
 import EditorJs from "react-editor-js";
 import Image from "@editorjs/image";
 import Paragraph from "@editorjs/paragraph";
 import Header from "@editorjs/header";
+import { Context } from "../store";
 
 import SidebarLayout from "./SidebarLayout";
 
@@ -63,6 +64,10 @@ const SiloFileUploadLabel = styled("label")`
 `;
 
 function EditPage(props) {
+  const { appState, appDispatch } = useContext(Context);
+
+  const history = useHistory();
+
   const initialState = {
     urlId: useParams().id,
     page: {
@@ -125,6 +130,8 @@ function EditPage(props) {
           },
           body: JSON.stringify(state.page),
         });
+        history.push("/pages");
+        appDispatch({ type: "flash", value: "Page Saved!" });
       } catch (err) {
         console.log(err);
       }

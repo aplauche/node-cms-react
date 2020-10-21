@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link, withRouter } from "react-router-dom";
+import React, { useEffect, useContext } from "react";
+import { useParams, Link, withRouter, useHistory } from "react-router-dom";
 import SidebarLayout from "./SidebarLayout";
 
 import Button from "../components/Button";
 import { useImmerReducer } from "use-immer";
+import { Context } from "../store";
 
 import styled from "@emotion/styled";
 
@@ -44,6 +45,10 @@ const SiloFileUploadLabel = styled("label")`
 `;
 
 function EditUser(props) {
+  const { appState, appDispatch } = useContext(Context);
+
+  const history = useHistory();
+
   const initialState = {
     urlId: useParams().id,
     user: {
@@ -106,6 +111,8 @@ function EditUser(props) {
           },
           body: JSON.stringify(state.user),
         });
+
+        appDispatch({ type: "flash", value: "User Info Saved!" });
       } catch (err) {
         console.log(err);
       }

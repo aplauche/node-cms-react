@@ -7,12 +7,18 @@
       "seoTitle": "this is the blog meta title",
       "seoDesc": "this is the blog meta desc kjskldfj\n\n\n",
       "content": {
-        "time": 1603153272557,
+        "time": 1603243516026,
         "blocks": [
           {
             "type": "paragraph",
             "data": {
-              "text": "editing a blog post"
+              "text": "dfsfdsd"
+            }
+          },
+          {
+            "type": "paragraph",
+            "data": {
+              "text": "another line!"
             }
           }
         ],
@@ -42,7 +48,7 @@
       "body": "This is some content. lorem ipsum.",
       "published": true,
       "content": {
-        "time": 1603152965408,
+        "time": 1603243418049,
         "blocks": [
           {
             "type": "paragraph",
@@ -83,6 +89,6 @@
     "lastName": "Plauche",
     "email": "anton@anton.com",
     "password": "password",
-    "bio": "Anton is a writer based in central illinois."
+    "bio": "Anton is a writer based in central illinois"
   }
 }

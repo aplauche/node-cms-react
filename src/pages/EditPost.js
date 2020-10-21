@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useParams, Link, withRouter } from "react-router-dom";
+import React, { useEffect, useContext, useRef } from "react";
+import { useParams, Link, withRouter, useHistory } from "react-router-dom";
 import PostItem from "../components/PostItem";
 import SidebarLayout from "./SidebarLayout";
 import SearchBar from "../components/SearchBar";
 import Button from "../components/Button";
 import { useImmerReducer } from "use-immer";
+import { Context } from "../store";
 
 import EditorJs from "react-editor-js";
 import Image from "@editorjs/image";
@@ -63,6 +64,9 @@ const SiloFileUploadLabel = styled("label")`
 `;
 
 function EditPost(props) {
+  const { appState, appDispatch } = useContext(Context);
+
+  const history = useHistory();
   const initialState = {
     urlId: useParams().id,
     post: {
@@ -125,6 +129,8 @@ function EditPost(props) {
           },
           body: JSON.stringify(state.post),
         });
+        history.push("/posts");
+        appDispatch({ type: "flash", value: "Post Saved!" });
       } catch (err) {
         console.log(err);
       }
