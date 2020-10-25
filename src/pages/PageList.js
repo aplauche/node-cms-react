@@ -24,7 +24,7 @@ function PageList() {
   }, []);
 
   return (
-    <SidebarLayout title="Pages">
+    <SidebarLayout title="Pages" addNew="pages">
       <SearchBar />
       {pages.map((item) => {
         return (

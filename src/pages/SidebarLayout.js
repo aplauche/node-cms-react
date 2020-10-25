@@ -11,7 +11,7 @@ const SidebarLayoutContainer = styled("div")`
   background: #f5f5f5;
 `;
 
-function SidebarLayout({ children, title }) {
+function SidebarLayout({ children, title, addNew }) {
   return (
     <SidebarLayoutContainer>
       <Sidebar />
@@ -19,7 +19,7 @@ function SidebarLayout({ children, title }) {
         className="main"
         style={{ height: "100vh", overflow: "scroll", paddingTop: "70px" }}
       >
-        <Header title={title} />
+        <Header title={title} addNew={addNew} />
         <div
           style={{
             width: "100%",

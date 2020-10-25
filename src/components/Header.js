@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styled from "@emotion/styled";
 import { Context } from "../store";
 import Button from "./Button";
+import { useHistory } from "react-router-dom";
 
 const HeaderDiv = styled("div")`
   height: 70px;
@@ -22,11 +23,16 @@ const HeaderDiv = styled("div")`
   }
 `;
 
-function Header({ title }) {
+function Header({ title, addNew }) {
   const { appState, appDispatch } = useContext(Context);
+  const history = useHistory();
 
   function handleLogout() {
     appDispatch({ type: "logout" });
+  }
+
+  function handleAddNew() {
+    history.push(`/${addNew}/add`);
   }
 
   return (
@@ -34,7 +40,8 @@ function Header({ title }) {
       <div className="header-inner">
         <h2>{title}</h2>
         <div>
-          {/* <Button>Add New</Button> */}
+          {addNew && <Button onClick={handleAddNew}>Add New</Button>}
+
           <Button onClick={handleLogout}>Logout</Button>
         </div>
       </div>

@@ -153,7 +153,7 @@ function EditPage(props) {
   }
 
   return (
-    <SidebarLayout title={state.page.title}>
+    <SidebarLayout title={state.page.title} addNew="pages">
       <form action="/pages" method="POST">
         <FormGroup>
           <SiloLabel htmlFor="title">Page Title</SiloLabel>

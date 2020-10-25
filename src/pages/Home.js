@@ -61,10 +61,6 @@ const LoginContent = styled("div")`
 function Home() {
   const { appState, appDispatch } = useContext(Context);
 
-  function handleLogin() {
-    appDispatch({ type: "login" });
-  }
-
   if (!appState.loggedIn) {
     return (
       <LoginContent>
@@ -121,7 +117,9 @@ function Home() {
           <h1>Create</h1>
           <hr />
           <DashboardItemDiv>Add New Post</DashboardItemDiv>
-          <DashboardItemDiv>Add New Page</DashboardItemDiv>
+          <Link to={"/pages/add"}>
+            <DashboardItemDiv>Add New Page</DashboardItemDiv>
+          </Link>
         </div>
         <div>
           <h1>Manage</h1>
