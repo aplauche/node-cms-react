@@ -8,6 +8,7 @@ const SearchBarInput = styled("input")`
   border: none;
   border-bottom: 2px solid #a6c0fe;
   margin-bottom: 30px;
+  background: #f5f5f5;
 `;
 
 function SearchBar() {

@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { Context } from "../store";
 import SidebarLayout from "./SidebarLayout";
 import Button from "../components/Button";
+import Register from "../components/Register";
 
 const DashboardDiv = styled("div")`
   display: grid;
@@ -29,6 +30,34 @@ const DashboardItemDiv = styled("div")`
   }
 `;
 
+const LoginContent = styled("div")`
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & .login-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+    z-index: 2;
+
+    & > div {
+      width: 50%;
+    }
+
+    & h1 {
+      color: white;
+      font-size: 80px;
+      font-weight: 900;
+      margin: 0;
+    }
+  }
+`;
+
 function Home() {
   const { appState, appDispatch } = useContext(Context);
 
@@ -38,17 +67,50 @@ function Home() {
 
   if (!appState.loggedIn) {
     return (
-      <div
-        style={{
-          width: "100%",
-          minHeight: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Button onClick={handleLogin}>login</Button>
-      </div>
+      <LoginContent>
+        <img
+          style={{
+            position: "absolute",
+            bottom: "0px",
+            left: "0px",
+            width: "70%",
+            height: "80%",
+          }}
+          src="/images/large-circle.svg"
+          alt=""
+        />
+
+        <img
+          style={{
+            position: "absolute",
+            top: "0px",
+            right: "0px",
+            width: "30%",
+            height: "80%",
+          }}
+          src="/images/small-circle.svg"
+          alt=""
+        />
+        <img
+          style={{
+            position: "absolute",
+            top: "20px",
+            left: "20px",
+            width: "60px",
+            height: "auto",
+          }}
+          src="/images/home-logo.svg"
+          alt=""
+        />
+        <section className="login-row">
+          <div>
+            <img src="/images/silo-logo.svg" alt="" />
+            <h1>SILO</h1>
+          </div>
+
+          <Register></Register>
+        </section>
+      </LoginContent>
     );
   }
 

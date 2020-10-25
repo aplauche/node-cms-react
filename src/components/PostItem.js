@@ -32,7 +32,7 @@ const PostItemDiv = styled("div")`
 `;
 
 function PostItem(props) {
-  const { id, contentType, title, date, published } = props;
+  const { id, slug, contentType, title, date, published } = props;
 
   return (
     <PostItemDiv published={published}>
@@ -43,7 +43,7 @@ function PostItem(props) {
         {published ? "live" : "draft"}
       </span>
       <div>
-        <Link to={`${contentType}/edit/${id}`}>
+        <Link to={`${contentType}/edit/${slug}`}>
           <button>Edit</button>
         </Link>
         <button>Delete</button>

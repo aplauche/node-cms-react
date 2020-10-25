@@ -71,10 +71,8 @@ function EditPage(props) {
   const initialState = {
     urlId: useParams().id,
     page: {
-      id: "",
       title: "",
       content: {},
-      date: "",
       seoTitle: "",
       seoDesc: "",
     },
@@ -108,10 +106,13 @@ function EditPage(props) {
     console.log(state);
     async function fetchpage() {
       try {
-        const res = await fetch(`/pages/${state.urlId}`);
+        const res = await fetch(
+          `https://node-cms-backend.herokuapp.com/pages/${state.urlId}`
+        );
         const pageData = await res.json();
+        console.log(pageData);
 
-        dispatch({ type: "pageLoaded", pageData: pageData });
+        dispatch({ type: "pageLoaded", pageData: pageData[0] });
       } catch (err) {
         console.log(err);
       }
@@ -123,13 +124,16 @@ function EditPage(props) {
   function handleSubmit() {
     async function saveEdits() {
       try {
-        const res = await fetch(`/pages/${state.urlId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(state.page),
-        });
+        const res = await fetch(
+          `https://node-cms-backend.herokuapp.com/pages/${state.urlId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(state.page),
+          }
+        );
         history.push("/pages");
         appDispatch({ type: "flash", value: "Page Saved!" });
       } catch (err) {

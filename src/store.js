@@ -14,6 +14,9 @@ function GlobalContextProvider(props) {
       case "login":
         draft.loggedIn = true;
         break;
+      case "register":
+        draft.loggedIn = true;
+        break;
       case "logout":
         draft.loggedIn = false;
         break;

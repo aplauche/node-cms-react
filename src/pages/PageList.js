@@ -11,7 +11,7 @@ function PageList() {
   useEffect(() => {
     async function fetchPages() {
       try {
-        const res = await fetch("/pages");
+        const res = await fetch("https://node-cms-backend.herokuapp.com/pages");
         const pagesData = await res.json();
 
         setPages(pages.concat(pagesData));
@@ -29,11 +29,12 @@ function PageList() {
       {pages.map((item) => {
         return (
           <PostItem
-            key={item.id}
+            key={item._id}
             contentType="pages"
-            id={item.id}
+            id={item._id}
+            slug={item.slug}
             title={item.title}
-            date={item.date}
+            date={item.createdAt}
             published={item.published}
           />
         );
