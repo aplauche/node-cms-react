@@ -1,9 +1,8 @@
 import React, { useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+
 import styled from "@emotion/styled";
 import { Context } from "../store";
-import SidebarLayout from "./SidebarLayout";
-import Button from "../components/Button";
+
 import Register from "../components/Register";
 
 const DashboardDiv = styled("div")`
@@ -58,33 +57,55 @@ const LoginContent = styled("div")`
   }
 `;
 
-function Home() {
+function RegisterPage() {
   const { appState, appDispatch } = useContext(Context);
 
   return (
-    <SidebarLayout title="Home">
-      <DashboardDiv style={{ marginTop: "30px", marginBottom: "40px" }}>
+    <LoginContent>
+      <img
+        style={{
+          position: "absolute",
+          bottom: "0px",
+          left: "0px",
+          width: "70%",
+          height: "80%",
+        }}
+        src="/images/large-circle.svg"
+        alt=""
+      />
+
+      <img
+        style={{
+          position: "absolute",
+          top: "0px",
+          right: "0px",
+          width: "30%",
+          height: "80%",
+        }}
+        src="/images/small-circle.svg"
+        alt=""
+      />
+      <img
+        style={{
+          position: "absolute",
+          top: "20px",
+          left: "20px",
+          width: "60px",
+          height: "auto",
+        }}
+        src="/images/home-logo.svg"
+        alt=""
+      />
+      <section className="login-row">
         <div>
-          <h1>Create</h1>
-          <hr />
-          <DashboardItemDiv>Add New Post</DashboardItemDiv>
-          <Link to={"/pages/add"}>
-            <DashboardItemDiv>Add New Page</DashboardItemDiv>
-          </Link>
+          <img src="/images/silo-logo.svg" alt="" />
+          <h1>SILO</h1>
         </div>
-        <div>
-          <h1>Manage</h1>
-          <hr />
-          <Link to={"/posts"}>
-            <DashboardItemDiv>Manage Posts</DashboardItemDiv>
-          </Link>
-          <Link to={"/pages"}>
-            <DashboardItemDiv>Manage Pages</DashboardItemDiv>
-          </Link>
-        </div>
-      </DashboardDiv>
-    </SidebarLayout>
+
+        <Register></Register>
+      </section>
+    </LoginContent>
   );
 }
 
-export default Home;
+export default RegisterPage;

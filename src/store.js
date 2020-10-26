@@ -1,24 +1,35 @@
-import React, { useState, useContext, useReducer, createContext } from "react";
+import React, {
+  useState,
+  useContext,
+  useReducer,
+  useEffect,
+  createContext,
+} from "react";
 import { useImmerReducer } from "use-immer";
 
 export const Context = createContext();
 
 function GlobalContextProvider(props) {
   const initialState = {
-    loggedIn: false,
+    loggedIn: Boolean(window.sessionStorage.getItem("token")),
     flash: [],
+    token: window.sessionStorage.getItem("token"),
+    user: {},
   };
 
   const reducer = (draft, action) => {
     switch (action.type) {
       case "login":
+        draft.token = action.token;
         draft.loggedIn = true;
         break;
       case "register":
+        draft.token = action.token;
         draft.loggedIn = true;
         break;
       case "logout":
         draft.loggedIn = false;
+        draft.token = "";
         break;
       case "flash":
         draft.flash.push(action.value);

@@ -37,12 +37,57 @@ function Register() {
 
   const { appState, appDispatch } = useContext(Context);
 
-  function handleLogin() {
-    appDispatch({ type: "login" });
+  async function handleLogin() {
+    try {
+      const response = await fetch(
+        "https://node-cms-backend.herokuapp.com/users/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: state.email,
+            password: state.password,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (data.token) {
+        appDispatch({ type: "login", token: data.token });
+        appDispatch({ type: "flash", value: "Welcome!" });
+      } else {
+        appDispatch({ type: "flash", value: "An Error occured!" });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  function handleRegister() {
-    appDispatch({ type: "register" });
+  async function handleRegister() {
+    try {
+      const response = await fetch(
+        "https://node-cms-backend.herokuapp.com/users/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: state.email,
+            password: state.password,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (data.token) {
+        appDispatch({ type: "register", token: data.token });
+      } else {
+        appDispatch({ type: "flash", value: "An Error occured!" });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   function handleEmailChange(e) {
