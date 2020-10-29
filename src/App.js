@@ -57,9 +57,11 @@ function App() {
     if (appState.loggedIn) {
       // just logged in
       window.sessionStorage.setItem("token", appState.token);
+      appDispatch({ type: "flash", value: "Welcome!" });
     } else {
       // just logged out
       window.sessionStorage.removeItem("token");
+      appDispatch({ type: "flash", value: "Bye for now!" });
     }
   }, [appState.loggedIn]);
 

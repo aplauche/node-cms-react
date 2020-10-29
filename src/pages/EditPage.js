@@ -107,7 +107,12 @@ function EditPage(props) {
     async function fetchpage() {
       try {
         const res = await fetch(
-          `https://node-cms-backend.herokuapp.com/pages/${state.urlId}`
+          `https://node-cms-backend.herokuapp.com/pages/${state.urlId}`,
+          {
+            headers: {
+              Authorization: `bearer ${appState.token}`,
+            },
+          }
         );
         const pageData = await res.json();
         console.log(pageData);
@@ -130,6 +135,7 @@ function EditPage(props) {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `bearer ${appState.token}`,
             },
             body: JSON.stringify(state.page),
           }

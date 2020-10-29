@@ -109,6 +109,8 @@ function EditPage(props) {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+
+              Authorization: `bearer ${appState.token}`,
             },
 
             body: JSON.stringify(state.page),

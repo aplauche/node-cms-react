@@ -55,7 +55,6 @@ function Register() {
       const data = await response.json();
       if (data.token) {
         appDispatch({ type: "login", token: data.token });
-        appDispatch({ type: "flash", value: "Welcome!" });
       } else {
         appDispatch({ type: "flash", value: "An Error occured!" });
       }
