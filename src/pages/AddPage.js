@@ -74,6 +74,7 @@ function EditPage(props) {
       content: {},
       seoTitle: "",
       seoDesc: "",
+      featuredImage: "",
     },
   };
 
@@ -94,6 +95,9 @@ function EditPage(props) {
         break;
       case "seoDescChange":
         draft.page.seoDesc = action.data;
+        break;
+      case "imagePicked":
+        draft.page.featuredImage = action.data;
         break;
     }
   };
@@ -125,6 +129,26 @@ function EditPage(props) {
 
     saveEdits();
   }
+
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+
+    const formData = new FormData();
+
+    files.forEach((file, i) => {
+      formData.append(i, file);
+    });
+
+    fetch(`https://node-cms-backend.herokuapp.com/image-upload`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((images) => {
+        console.log(images);
+        dispatch({ type: "imagePicked", data: images[0].url });
+      });
+  };
 
   // Editor JS functions
   const instanceRef = useRef(null);
@@ -174,7 +198,12 @@ function EditPage(props) {
           <SiloFileUploadLabel htmlFor="file-upload">
             Click To Choose Featured Image
           </SiloFileUploadLabel>
-          <input id="file-upload" type="file" style={{ display: "none" }} />
+          <input
+            id="file-upload"
+            type="file"
+            onChange={handleImageUpload}
+            style={{ display: "none" }}
+          />
         </FormGroup>
         <FormGroup>
           <SiloLabel htmlFor="title">SEO Meta Title</SiloLabel>
