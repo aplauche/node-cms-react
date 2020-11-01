@@ -35,6 +35,12 @@ function PageList() {
     fetchPages();
   }, []);
 
+  function deleteCallback(id) {
+    setPages(() => {
+      return pages.filter((page) => page.id != id);
+    });
+  }
+
   return (
     <SidebarLayout title="Pages" addNew="pages">
       <SearchBar />
@@ -48,6 +54,7 @@ function PageList() {
             title={item.title}
             date={item.createdAt}
             published={item.published}
+            deleteCallback={deleteCallback}
           />
         );
       })}

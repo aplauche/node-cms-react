@@ -1,67 +1,12 @@
 import React, { useEffect, useContext, useRef } from "react";
 import { useParams, Link, withRouter, useHistory } from "react-router-dom";
-import EditorJs from "react-editor-js";
-import Image from "@editorjs/image";
-import Paragraph from "@editorjs/paragraph";
-import Header from "@editorjs/header";
 import { Context } from "../store";
 
 import SidebarLayout from "./SidebarLayout";
 
 import Button from "../components/Button";
-
+import EditorForm from "../components/EditorForm";
 import { useImmerReducer } from "use-immer";
-
-import styled from "@emotion/styled";
-
-const FormGroup = styled("div")`
-  margin-bottom: 20px;
-`;
-
-const SiloLabel = styled("label")`
-  color: #555;
-  margin-bottom: 6px;
-`;
-
-const SiloInput = styled("input")`
-  width: 100%;
-  border: 1px solid #a6c0fe;
-  display: block;
-  padding: 8px;
-  border-radius: 5px;
-`;
-
-const SiloTextArea = styled("textarea")`
-  width: 100%;
-  border: 1px solid #a6c0fe;
-  display: block;
-  resize: none;
-  padding: 8px;
-  border-radius: 5px;
-`;
-
-const SiloEditor = styled("div")`
-  width: 100%;
-
-  & #editor-js {
-    border: 1px solid #a6c0fe;
-    border-radius: 5px;
-    background-color: white;
-  }
-  & .codex-editor__redactor {
-    padding-bottom: 100px !important;
-  }
-`;
-
-const SiloFileUploadLabel = styled("label")`
-  width: 100%;
-  border: 1px dashed #f68084;
-  display: flex;
-  height: 100px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-`;
 
 function EditPage(props) {
   const { appState, appDispatch } = useContext(Context);
@@ -69,35 +14,39 @@ function EditPage(props) {
   const history = useHistory();
 
   const initialState = {
-    page: {
+    data: {
       title: "",
       content: {},
       seoTitle: "",
       seoDesc: "",
       featuredImage: "",
     },
+    isLoaded: true,
   };
 
   const reducer = (draft, action) => {
     switch (action.type) {
-      case "pageLoaded":
-        draft.page = action.pageData;
+      case "dataLoaded":
+        draft.data = action.pageData;
         draft.isLoaded = true;
         break;
       case "titleChange":
-        draft.page.title = action.data;
+        draft.data.title = action.data;
         break;
       case "contentChange":
-        draft.page.content = action.data;
+        draft.data.content = action.data;
         break;
       case "seoTitleChange":
-        draft.page.seoTitle = action.data;
+        draft.data.seoTitle = action.data;
         break;
       case "seoDescChange":
-        draft.page.seoDesc = action.data;
+        draft.data.seoDesc = action.data;
         break;
-      case "imagePicked":
-        draft.page.featuredImage = action.data;
+      case "imageUpload":
+        draft.data.featuredImage = action.data;
+        break;
+      case "removeImage":
+        draft.data.featuredImage = "";
         break;
     }
   };
@@ -117,7 +66,7 @@ function EditPage(props) {
               Authorization: `bearer ${appState.token}`,
             },
 
-            body: JSON.stringify(state.page),
+            body: JSON.stringify(state.data),
           }
         );
         history.push("/pages");
@@ -130,104 +79,9 @@ function EditPage(props) {
     saveEdits();
   }
 
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-
-    const formData = new FormData();
-
-    files.forEach((file, i) => {
-      formData.append(i, file);
-    });
-
-    fetch(`https://node-cms-backend.herokuapp.com/image-upload`, {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((images) => {
-        console.log(images);
-        dispatch({ type: "imagePicked", data: images[0].url });
-      });
-  };
-
-  // Editor JS functions
-  const instanceRef = useRef(null);
-
-  async function handleEditorJSSave() {
-    const savedData = await instanceRef.current.save();
-    dispatch({ type: "contentChange", data: savedData });
-  }
-
   return (
-    <SidebarLayout title={state.page.title}>
-      <form>
-        <FormGroup>
-          <SiloLabel htmlFor="title">Page Title</SiloLabel>
-          <SiloInput
-            id="title"
-            type="text"
-            value={state.page.title || ""}
-            onChange={(e) =>
-              dispatch({ type: "titleChange", data: e.target.value })
-            }
-          ></SiloInput>
-        </FormGroup>
-        <FormGroup>
-          <SiloLabel>Main Content</SiloLabel>
-          <SiloEditor>
-            <EditorJs
-              instanceRef={(instance) => (instanceRef.current = instance)}
-              tools={{
-                image: Image,
-                paragraph: {
-                  class: Paragraph,
-                  inlineToolbar: true,
-                },
-                header: {
-                  class: Header,
-                  inlineToolbar: true,
-                },
-              }}
-              data={state.page.content}
-              onChange={handleEditorJSSave}
-              placeholder="Start creating your content..."
-            />
-          </SiloEditor>
-        </FormGroup>
-        <FormGroup>
-          <SiloFileUploadLabel htmlFor="file-upload">
-            Click To Choose Featured Image
-          </SiloFileUploadLabel>
-          <input
-            id="file-upload"
-            type="file"
-            onChange={handleImageUpload}
-            style={{ display: "none" }}
-          />
-        </FormGroup>
-        <FormGroup>
-          <SiloLabel htmlFor="title">SEO Meta Title</SiloLabel>
-          <SiloInput
-            id="seotitle"
-            type="text"
-            value={state.page.seoTitle || ""}
-            onChange={(e) =>
-              dispatch({ type: "seoTitleChange", data: e.target.value })
-            }
-          ></SiloInput>
-        </FormGroup>
-        <FormGroup>
-          <SiloLabel htmlFor="body">SEO Meta Description</SiloLabel>
-          <SiloTextArea
-            id="seobody"
-            value={state.page.seoDesc || ""}
-            rows="6"
-            onChange={(e) =>
-              dispatch({ type: "seoDescChange", data: e.target.value })
-            }
-          ></SiloTextArea>
-        </FormGroup>
-      </form>
+    <SidebarLayout title={state.data.title}>
+      <EditorForm contentType="Page" formState={state} dispatch={dispatch} />
       <Button onClick={handleSubmit}>Save Page</Button>
     </SidebarLayout>
   );

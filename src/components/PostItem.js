@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import { Context } from "../store";
 
 const PostItemDiv = styled("div")`
   color: gray;
@@ -33,6 +34,32 @@ const PostItemDiv = styled("div")`
 
 function PostItem(props) {
   const { id, slug, contentType, title, date, published } = props;
+  const { appState, appDispatch } = useContext(Context);
+
+  function handleDeletePost() {
+    async function deletePost() {
+      try {
+        const res = await fetch(
+          `https://node-cms-backend.herokuapp.com/pages/${slug}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `bearer ${appState.token}`,
+            },
+          }
+        );
+        appDispatch({ type: "flash", value: "Page Deleted!" });
+        props.deleteCallback(id);
+      } catch (err) {
+        console.log(err);
+
+        appDispatch({ type: "flash", value: "An Error Occured!" });
+      }
+    }
+
+    deletePost();
+  }
 
   return (
     <PostItemDiv published={published}>
@@ -46,7 +73,7 @@ function PostItem(props) {
         <Link to={`${contentType}/edit/${slug}`}>
           <button>Edit</button>
         </Link>
-        <button>Delete</button>
+        <button onClick={handleDeletePost}>Delete</button>
       </div>
     </PostItemDiv>
   );
