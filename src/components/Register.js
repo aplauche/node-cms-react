@@ -33,11 +33,15 @@ function Register() {
   const [state, setState] = useImmer({
     email: "",
     password: "",
+    loading: false,
   });
 
   const { appState, appDispatch } = useContext(Context);
 
   async function handleLogin() {
+    setState((draft) => {
+      draft.loading = true;
+    });
     try {
       const response = await fetch(
         "https://node-cms-backend.herokuapp.com/users/login",
@@ -58,12 +62,18 @@ function Register() {
       } else {
         appDispatch({ type: "flash", value: "An Error occured!" });
       }
+      setState((draft) => {
+        draft.loading = false;
+      });
     } catch (e) {
       console.log(e);
     }
   }
 
   async function handleRegister() {
+    setState((draft) => {
+      draft.loading = true;
+    });
     try {
       const response = await fetch(
         "https://node-cms-backend.herokuapp.com/users/register",
@@ -84,6 +94,9 @@ function Register() {
       } else {
         appDispatch({ type: "flash", value: "An Error occured!" });
       }
+      setState((draft) => {
+        draft.loading = false;
+      });
     } catch (e) {
       console.log(e);
     }
@@ -105,33 +118,45 @@ function Register() {
 
   return (
     <LoginWindow>
-      <form>
-        <FormGroup>
-          <SiloLabel htmlFor="email">Email Address</SiloLabel>
-          <SiloInput
-            id="email"
-            type="text"
-            value={state.email || ""}
-            onChange={handleEmailChange}
-          />
-        </FormGroup>
+      {state.loading ? (
+        <div>loading...</div>
+      ) : (
+        <>
+          <form>
+            <FormGroup>
+              <SiloLabel htmlFor="email">Email Address</SiloLabel>
+              <SiloInput
+                id="email"
+                type="text"
+                value={state.email || ""}
+                onChange={handleEmailChange}
+              />
+            </FormGroup>
 
-        <FormGroup>
-          <SiloLabel htmlFor="password">Password</SiloLabel>
-          <SiloInput
-            id="password"
-            type="password"
-            value={state.password || ""}
-            onChange={handlePasswordChange}
-          />
-        </FormGroup>
-      </form>
-      <Button style={{ margin: "20px 10px 20px 0px" }} onClick={handleLogin}>
-        Login
-      </Button>
-      <Button style={{ margin: "20px 10px 20px 0px" }} onClick={handleRegister}>
-        Register
-      </Button>
+            <FormGroup>
+              <SiloLabel htmlFor="password">Password</SiloLabel>
+              <SiloInput
+                id="password"
+                type="password"
+                value={state.password || ""}
+                onChange={handlePasswordChange}
+              />
+            </FormGroup>
+          </form>
+          <Button
+            style={{ margin: "20px 10px 20px 0px" }}
+            onClick={handleLogin}
+          >
+            Login
+          </Button>
+          <Button
+            style={{ margin: "20px 10px 20px 0px" }}
+            onClick={handleRegister}
+          >
+            Register
+          </Button>
+        </>
+      )}
     </LoginWindow>
   );
 }

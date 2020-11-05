@@ -37,28 +37,7 @@ function PostItem(props) {
   const { appState, appDispatch } = useContext(Context);
 
   function handleDeletePost() {
-    async function deletePost() {
-      try {
-        const res = await fetch(
-          `https://node-cms-backend.herokuapp.com/pages/${slug}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `bearer ${appState.token}`,
-            },
-          }
-        );
-        appDispatch({ type: "flash", value: "Page Deleted!" });
-        props.deleteCallback(id);
-      } catch (err) {
-        console.log(err);
-
-        appDispatch({ type: "flash", value: "An Error Occured!" });
-      }
-    }
-
-    deletePost();
+    props.deleteCallback(id, slug);
   }
 
   return (

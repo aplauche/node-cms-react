@@ -11,6 +11,7 @@ import PageList from "./pages/PageList";
 import EditPost from "./pages/EditPost";
 import EditPage from "./pages/EditPage";
 import AddPage from "./pages/AddPage";
+import AddPost from "./pages/AddPost";
 import FlashMessages from "./components/FlashMessages";
 import Home from "./pages/Home";
 import GlobalContextProvider from "./store";
@@ -85,6 +86,9 @@ function App() {
           </Route>
           <Route exact path="/pages/add">
             <AddPage />
+          </Route>
+          <Route exact path="/posts/add">
+            <AddPost />
           </Route>
           <Route exact path="/profile">
             <EditUser />

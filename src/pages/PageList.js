@@ -35,15 +35,34 @@ function PageList() {
     fetchPages();
   }, []);
 
-  function deleteCallback(id) {
-    setPages(() => {
-      return pages.filter((page) => page.id != id);
-    });
+  function deleteCallback(id, slug) {
+    async function deletePage() {
+      try {
+        const res = await fetch(
+          `https://node-cms-backend.herokuapp.com/pages/${slug}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `bearer ${appState.token}`,
+            },
+          }
+        );
+        appDispatch({ type: "flash", value: "Page Deleted!" });
+        setPages(pages.filter((page) => page._id != id));
+      } catch (err) {
+        console.log(err);
+
+        appDispatch({ type: "flash", value: "An Error Occured!" });
+      }
+    }
+
+    deletePage();
   }
 
   return (
     <SidebarLayout title="Pages" addNew="pages">
-      <SearchBar />
+      {/* <SearchBar /> */}
       {pages.map((item) => {
         return (
           <PostItem
